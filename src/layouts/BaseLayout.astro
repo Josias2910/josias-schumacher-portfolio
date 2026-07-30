@@ -1,0 +1,33 @@
+---
+import SiteHeader from "./components/SiteHeader.astro";
+import SiteFooter from "./components/SiteFooter.astro";
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "Josias Schumacher — Developer",
+  description = "Portfolio of a developer building refined, high-craft digital products.",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+  </head>
+  <body class="bg-[var(--color-bg)] text-[var(--color-text)] antialiased selection:bg-white selection:text-black">
+    <SiteHeader />
+    <main>
+      <slot />
+    </main>
+    <SiteFooter />
+  </body>
+</html>

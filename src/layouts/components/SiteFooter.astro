@@ -1,0 +1,98 @@
+---
+const socialLinks = [
+  { label: "GitHub", href: "https://github.com" },
+  { label: "LinkedIn", href: "https://linkedin.com" },
+  { label: "Instagram", href: "https://instagram.com" },
+];
+---
+
+<footer class="relative border-t border-[var(--color-border)] bg-[#1c1d20]">
+  <div class="mx-auto max-w-7xl px-6 py-24 sm:px-8 sm:py-0">
+    
+
+    <!-- Headline -->
+    <div class="flex items-start pt-55 gap-4 sm:gap-6">
+      
+      <p class="font-display text-[clamp(3.25rem,7vw,8rem)] leading-[1] tracking-[-0.03em] text-[var(--color-text)]">
+        Hagámoslo
+        <br />
+        realidad
+      </p>
+    </div>
+
+    <!-- Line + CTA -->
+    <div class="mt-16 flex items-center gap-6 sm:mt-0">
+      <div class="h-px flex-1 bg-[var(--color-border)]"></div>
+      <a
+        href="mailto:hello@josias.dev"
+        class="flex h-28 w-28 shrink-0 items-center justify-center rounded-full border border-[var(--color-border)] text-center text-xs uppercase tracking-widest bg-[#4c62e6] text-[var(--color-text)] transition-colors hover:bg-[#3a51d0] hover:text-black sm:h-52 sm:w-52"
+      >
+        Contáctame 
+      </a>
+    </div>
+
+    <!-- Contact pills -->
+    <div class="mt-5 flex flex-wrap gap-4">
+      <a
+        href="mailto:hello@josias.dev"
+        class="rounded-full border border-[var(--color-border)] px-13 py-7 text-base text-[var(--color-text)] transition-colors hover:border-white/30"
+      >
+        JosiasSchumacher@gmail.com
+      </a>
+      <a
+        href="tel:+5493435329928"
+        class="rounded-full border border-[var(--color-border)] px-13 py-7 text-base text-[var(--color-text)] transition-colors hover:border-white/30"
+      >
+        +54 9 343 532 9928
+      </a>
+    </div>
+  </div>
+  <!-- Bottom bar -->
+    <div class="w-full mt-24 px-10 py-10 flex flex-col gap-10 sm:flex-row sm:items-end sm:justify-between ">
+      <div class="flex gap-12">
+        <div>
+          <p class="text-[10px] uppercase tracking-widest text-[var(--color-text-muted)]">Version</p>
+          <p class="mt-1 text-sm text-[var(--color-text)]">{new Date().getFullYear()} &copy; Josias Schumacher</p>
+        </div>
+        <div>
+          <p class="text-[10px] uppercase tracking-widest text-[var(--color-text-muted)]">Local time</p>
+          <p id="local-time" class="mt-1 text-sm text-[var(--color-text)]"></p>
+        </div>
+      </div>
+
+      <nav aria-label="Social">
+        <p class="text-[10px] uppercase tracking-widest text-[var(--color-text-muted)]">Socials</p>
+        <ul class="mt-1 flex flex-wrap gap-x-6 gap-y-2 text-sm">
+          {socialLinks.map((social) => (
+            <li>
+              <a
+                href={social.href}
+                target="_blank"
+                rel="noreferrer"
+                class="text-[var(--color-text)] transition-colors hover:text-[var(--color-text-muted)]"
+              >
+                {social.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </div>
+</footer>
+
+<script>
+  const timeEl = document.getElementById("local-time");
+
+  function updateTime() {
+    if (!timeEl) return;
+    const now = new Date();
+    const time = now.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
+    const zone = new Intl.DateTimeFormat("en-US", { timeZoneName: "short" })
+      .formatToParts(now)
+      .find((part) => part.type === "timeZoneName")?.value ?? "";
+    timeEl.textContent = `${time} ${zone}`;
+  }
+
+  updateTime();
+  setInterval(updateTime, 30000);
+</script>

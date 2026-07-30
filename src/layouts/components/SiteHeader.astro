@@ -1,0 +1,71 @@
+---
+const navLinks = [
+  { label: "Sobre mí", href: "#sobre-mi" },
+  { label: "Experiencia", href: "#experiencia" },
+  { label: "Proyectos", href: "#proyectos" },
+  { label: "Contacto", href: "#contacto" },
+];
+---
+
+<header class="fixed inset-x-0 top-0 z-50 border-b border-[var(--color-border)] bg-transparent backdrop-blur-md">
+  <div class="flex h-16 max-full items-center justify-between px-6 sm:px-8">
+    <a href="/" class="flex items-center gap-3" aria-label="Josias Schumacher — home">
+      <span class="flex h-7 w-7 items-center justify-center rounded-full border border-[var(--color-border)] font-display text-xs">
+        JS
+      </span>
+      <span class="hidden text-xs uppercase tracking-[0.2em] text-[var(--color-text-muted)] sm:inline">
+        Josias Schumacher
+      </span>
+    </a>
+
+    <div class="hidden items-center gap-8 md:flex">
+      
+
+      <nav aria-label="Primary">
+        <ul class="flex items-center gap-6 text-sm text-[var(--color-text-muted)]">
+          {navLinks.map((link) => (
+            <li>
+              <a href={link.href} class="transition-colors hover:text-[var(--color-text)]">
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </div>
+
+    <button
+      id="menu-toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="mobile-nav"
+      aria-label="Open menu"
+      class="flex items-center gap-2 text-xs uppercase tracking-widest text-[var(--color-text-muted)] transition-colors hover:text-[var(--color-text)] md:hidden"
+    >
+      Menu
+      <span class="flex h-4 w-5 flex-col justify-between">
+        <span class="h-px w-full bg-current"></span>
+        <span class="h-px w-full bg-current"></span>
+      </span>
+    </button>
+  </div>
+</header>
+
+<nav
+  id="mobile-nav"
+  aria-label="Mobile"
+  hidden
+  class="fixed inset-0 z-40 flex flex-col justify-center gap-2 bg-[var(--color-bg)] px-8 md:hidden"
+>
+  <ul class="space-y-4">
+    {navLinks.map((link) => (
+      <li>
+        <a href={link.href} class="mobile-nav-link font-display text-4xl text-[var(--color-text)]">
+          {link.label}
+        </a>
+      </li>
+    ))}
+  </ul>
+</nav>
+
+<div class="h-16" aria-hidden="true"></div>
