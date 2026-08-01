@@ -1,11 +1,16 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro"
+import HeroSection from "../components/sections/principal/HeroSection.astro"
+import portrait2 from "../assets/principal/backgroundHero2.png";
+import EntranceAnimation from "../components/sections/principal/EntranceSection.astro";
 ---
 
 <BaseLayout>
-
-	<section class="bg-white">
-
-	</section>
-
+	<EntranceAnimation />
+	<HeroSection
+    backgroundImage={portrait2}
+    backgroundAlt="Josias de espaldas"
+    titleLines={["Software", "Developer"]}
+    name="Josias Schumacher"
+  />
 </BaseLayout>

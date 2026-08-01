@@ -1,0 +1,14 @@
+---
+---
+<div id="entrance-overlay" class="fixed inset-0 z-[999] bg-[#141517] flex items-center justify-center">
+  <span id="entrance-text" class="text-white text-4xl font-light"></span>
+</div>
+
+<script>
+  import { playEntranceAnimation } from "../../animations/entranceAnimation";
+
+  const overlay = document.getElementById("entrance-overlay")!;
+  const text = document.getElementById("entrance-text")!;
+
+  playEntranceAnimation(overlay, text, () => overlay.remove());
+</script>
