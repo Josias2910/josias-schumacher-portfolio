@@ -12,9 +12,6 @@ interface Props {
 }
 
 const { backgroundImage, backgroundAlt, titleLines, name } = Astro.props;
-
-// Repetido para que la pista vertical nunca se quede corta antes de loopear
-const marqueeItems = Array.from({ length: 8 });
 ---
 
 <section data-hero class="relative -mt-16 h-[85vh] min-h-[600px] w-full overflow-hidden sm:h-screen">
@@ -32,12 +29,14 @@ const marqueeItems = Array.from({ length: 8 });
     aria-hidden="true"
   ></div>
 
+   <div class="hero-whiteout pointer-events-none absolute inset-0 z-10 bg-black opacity-0" aria-hidden="true"></div>
+
   <!-- Título "SOFTWARE DEVELOPER": cada línea rompe sus letras en spans
        individuales (.hero-letter) para animar la entrada letra por letra.
        .hero-title-line-inner sigue existiendo para el parallax de mouse
        independiente de la línea completa (.hero-title-line, usada para
        la flotación orgánica post-entrada). -->
-  <div class="absolute left-6 top-[25%] z-20 sm:left-10 lg:left-56">
+ <div class="absolute left-6 top-[25%] z-20 sm:left-10 lg:left-56">
     <h1 class="hero-title relative font-sans text-[clamp(2.75rem,7vw,7rem)] font-medium uppercase leading-[0.85] tracking-tight text-white">
       {titleLines.map((line) => (
         <span class="hero-title-line block">
@@ -49,28 +48,18 @@ const marqueeItems = Array.from({ length: 8 });
         </span>
       ))}
     </h1>
-  </div>
 
-  <!-- Nombre como columna vertical en el borde derecho: pista duplicada
-       desplazada -50% en loop infinito, mix-blend-difference para
-       contraste automático sobre niebla clara u oscura -->
-  <div
-    class="hero-vertical-marquee pointer-events-none absolute inset-y-0 right-4 z-20 hidden w-10 overflow-hidden sm:right-8 sm:block lg:right-12 [mask-image:linear-gradient(to_bottom,transparent,black_15%,black_85%,transparent)]"
-  >
-    <div class="hero-vertical-marquee-track mix-blend-difference flex h-max flex-col items-center gap-12">
-      {[0, 1].map(() => (
-        <span class="flex flex-col items-center gap-12 pb-12">
-          {marqueeItems.map(() => (
-            <>
-              <span
-                class="font-sans text-xs uppercase tracking-[0.4em] text-white"
-                style="writing-mode: vertical-rl;"
-              >
-                {name}
-              </span>
-              <span class="text-white" aria-hidden="true">✦</span>
-            </>
-          ))}
+    <!-- Nombre: oculto por defecto, aparece con una entrada tipo "logo
+         reveal" (letras volando desde distintas direcciones + overshoot
+         elástico) solo al pasar el mouse por el título. Pegado justo
+         debajo del título, heredando su misma alineación izquierda. -->
+    <div
+  class="hero-name-reveal pointer-events-none mt-3 flex gap-1 opacity-0 sm:mt-4 sm:gap-2"
+  aria-hidden="true"
+>
+      {name.split("").map((char) => (
+        <span class="hero-name-letter inline-block font-sans text-[clamp(1rem,2.2vw,1.5rem)] font-semibold uppercase tracking-[0.3em] text-white/90">
+          {char === " " ? "\u00A0" : char}
         </span>
       ))}
     </div>
@@ -80,7 +69,7 @@ const marqueeItems = Array.from({ length: 8 });
 <script>
   // Engancha las animaciones GSAP a esta instancia del Hero,
   // pero solo después de que termine la animación de entrada
-  import { initHeroAnimations } from "../../animations/hero/heroAnimations";
+  import { initHeroAnimations } from "../../animations/heroAnimations";
 
   const hero = document.querySelector<HTMLElement>("[data-hero]");
 
